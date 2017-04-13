@@ -3,10 +3,8 @@
 import React, { Component, PropTypes } from 'react'
 import ReactNative from 'react-native'
 const {
-  Platform,
   ScrollView,
-  View,
-  ViewPagerAndroid
+  View
 } = ReactNative
 
 import Circles from './Circles'
@@ -51,15 +49,11 @@ export default class SwipeALot extends Component {
         page
       })
 
-      if (Platform.OS === 'android') {
-        this.swiper.setPage(page)
-      }
-      else {
-        const { width } = this.store.getState()
-        this.swiper.scrollTo({
-          x: page * width
-        })
-      }
+    const { width } = this.store.getState()
+    this.swiper.scrollTo({
+      x: page * width
+    })
+
     }
 
     this.emitter.addListener('swipeToPage', this.swipeToPageListener)
@@ -120,67 +114,42 @@ export default class SwipeALot extends Component {
           this.swipeToPage(page)
         }}>
         {(() => {
-          if (Platform.OS === 'ios') {
-            return (
-              <ScrollView
-                ref={(c) => this.swiper = c}
-                pagingEnabled={true}
-                horizontal={true}
-                bounces={false}
-                removeClippedSubviews={true}
-                showsHorizontalScrollIndicator={false}
-                showsVerticalScrollIndicator={false}
-                onMomentumScrollEnd={(e) => {
-                  const { width } = this.store.getState()
-                  const page = e.nativeEvent.contentOffset.x / width
-                  this.store.dispatch({
-                    type: 'SET_ACTIVE_PAGE',
-                    page: page
-                  })
-                  if (this.getAutoplaySettings().disableOnSwipe &&
-                    this.autoplayPageCurrentlyBeingTransitionedTo !== page) {
-                    this.stopAutoplay()
-                  }
-                }}
-                onLayout={(event) => {
-                  const {x, y, width, height} = event.nativeEvent.layout
-                  this.store.dispatch({
-                    type: 'SET_DIMS',
-                    width,
-                    height
-                  })
-                }}
-                automaticallyAdjustContentInsets={false}>
-                {React.Children.map(this.props.children, (c, i) => {
-                  return <FixedSizeView store={this.store} key={`view${i}`}>{c}</FixedSizeView>
-                })}
-              </ScrollView>
-            )
-          }
-          else if (Platform.OS === 'android') {
-            return (
-              <ViewPagerAndroid
-                ref={(c) => this.swiper = c}
-                initialPage={0}
-                onPageSelected={(e) => {
-                  this.store.dispatch({
-                    type: 'SET_ACTIVE_PAGE',
-                    page: e.nativeEvent.position
-                  })
-                  if (this.getAutoplaySettings().disableOnSwipe &&
-                    this.autoplayPageCurrentlyBeingTransitionedTo !== e) {
-                    this.stopAutoplay()
-                  }
-                }}
-                style={{
-                  flex: 1
-                }}>
-                {React.Children.map(this.props.children, (c) => {
-                  return <View>{c}</View>
-                })}
-              </ViewPagerAndroid>
-            )
-          }
+          return (
+            <ScrollView
+              ref={(c) => this.swiper = c}
+              pagingEnabled={true}
+              horizontal={true}
+              bounces={false}
+              removeClippedSubviews={true}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              onMomentumScrollEnd={(e) => {
+                const { width } = this.store.getState()
+                const page = e.nativeEvent.contentOffset.x / width
+                this.store.dispatch({
+                  type: 'SET_ACTIVE_PAGE',
+                  page: page
+                })
+                if (this.getAutoplaySettings().disableOnSwipe &&
+                  this.autoplayPageCurrentlyBeingTransitionedTo !== page) {
+                  this.stopAutoplay()
+                }
+              }}
+              onLayout={(event) => {
+                const {x, y, width, height} = event.nativeEvent.layout
+                this.store.dispatch({
+                  type: 'SET_DIMS',
+                  width,
+                  height
+                })
+              }}
+              automaticallyAdjustContentInsets={false}>
+              {React.Children.map(this.props.children, (c, i) => {
+                return <FixedSizeView store={this.store} key={`view${i}`}>{c}</FixedSizeView>
+              })}
+            </ScrollView>
+          )
+
         })()}
         <Circles store={this.store} emitter={this.emitter}
           circleWrapperStyle={this.props.circleWrapperStyle}
