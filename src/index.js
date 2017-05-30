@@ -95,6 +95,11 @@ export default class SwipeALot extends Component {
     this.emitter.emit('swipeToPage', { page })
   }
 
+  static get defaultProps() {
+    return {
+        circlesBottom: true,
+    }
+  }
   static get propTypes() {
     return {
       wrapperStyle: PropTypes.object,
@@ -108,11 +113,20 @@ export default class SwipeALot extends Component {
   }
 
   render() {
+    const circles = (
+      <Circles store={this.store} emitter={this.emitter}
+        circleWrapperStyle={this.props.circleWrapperStyle}
+        circleDefaultStyle={this.props.circleDefaultStyle}
+        circleActiveStyle={this.props.circleActiveStyle}>
+        {this.props.children}
+      </Circles>
+    )
     return (
       <View style={[this.props.wrapperStyle, {flex: 1}]} onLayout={() => {
           const page = this.getPage()
           this.swipeToPage(page)
         }}>
+        {!this.props.circlesBottom && circles}
         {(() => {
           return (
             <ScrollView
@@ -149,14 +163,8 @@ export default class SwipeALot extends Component {
               })}
             </ScrollView>
           )
-
         })()}
-        <Circles store={this.store} emitter={this.emitter}
-          circleWrapperStyle={this.props.circleWrapperStyle}
-          circleDefaultStyle={this.props.circleDefaultStyle}
-          circleActiveStyle={this.props.circleActiveStyle}>
-          {this.props.children}
-        </Circles>
+        {this.props.circlesBottom && circles}
       </View>
     )
   }
