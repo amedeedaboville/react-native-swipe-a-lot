@@ -49,10 +49,10 @@ export default class SwipeALot extends Component {
         page
       })
 
-    const { width } = this.store.getState()
-    this.swiper.scrollTo({
-      x: page * width
-    })
+      const { width } = this.store.getState()
+      this.swiper.scrollTo({
+        x: page * width
+      })
 
     }
 
