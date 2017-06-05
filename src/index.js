@@ -162,7 +162,7 @@ export default class SwipeALot extends Component {
               }}
               automaticallyAdjustContentInsets={false}>
               {React.Children.map(this.props.children, (c, i) => {
-                return <FixedSizeView store={this.store} key={`view${i}`}>{c}</FixedSizeView>
+                return <FixedSizeView store={this.store} key={`swipealot-subview-${c.key}`}>{c}</FixedSizeView>
               })}
             </ScrollView>
           )
