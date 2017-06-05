@@ -139,7 +139,7 @@ export default class SwipeALot extends Component {
               showsVerticalScrollIndicator={false}
               onMomentumScrollEnd={(e) => {
                 const { width } = this.store.getState()
-                const page = e.nativeEvent.contentOffset.x / width
+                const page = Math.max(e.nativeEvent.contentOffset.x / width, this.props.children.length)
                 this.store.dispatch({
                   type: 'SET_ACTIVE_PAGE',
                   page: page
