@@ -144,6 +144,9 @@ export default class SwipeALot extends Component {
                   type: 'SET_ACTIVE_PAGE',
                   page: page
                 })
+                if(this.props.onScrollEnd) {
+                  this.props.onScrollEnd(page)
+                }
                 if (this.getAutoplaySettings().disableOnSwipe &&
                   this.autoplayPageCurrentlyBeingTransitionedTo !== page) {
                   this.stopAutoplay()
