@@ -137,6 +137,7 @@ export default class SwipeALot extends Component {
               removeClippedSubviews={true}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
+              scrollEnabled={this.props.scrollEnabled !== false}
               onMomentumScrollEnd={(e) => {
                 const { width } = this.store.getState()
                 const page = Math.max(Math.min(e.nativeEvent.contentOffset.x / width, this.props.children.length), 0)
