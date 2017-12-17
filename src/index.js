@@ -1,6 +1,7 @@
 
 
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import ReactNative from 'react-native'
 const {
   ScrollView,
