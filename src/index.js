@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactNative from 'react-native'
@@ -16,7 +14,7 @@ import { createStore } from 'redux'
 
 import { EventEmitter } from 'events'
 
-export default class SwipeALot extends Component {
+export default class SwipeALot extends React.Component {
   constructor(props) {
     super(props)
 

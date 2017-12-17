@@ -1,9 +1,8 @@
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View } from 'react-native'
 
-class FixedSizeView extends Component {
+class FixedSizeView extends React.Component {
   static get propTypes() {
     return {
       store: PropTypes.object,

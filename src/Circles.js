@@ -21,7 +21,7 @@ const styles = {
     backgroundColor: 'rgb(245, 245, 245)',
   }
 }
-class Circles extends Component {
+class Circles extends React.Component {
   static get propTypes() {
     return {
       store: PropTypes.object,
